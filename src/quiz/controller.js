@@ -1,3 +1,4 @@
+const { ClientRequest } = require("http");
 const pool = require("../db");
 const queries = require("./queries");
 const getQuiz = (req, res) => {
@@ -26,14 +27,20 @@ const getAnswerById = (req, res) => {
     res.status(200).json(results.rows);
   });
 };
-// const addQuestion = (req, res) => {
-//   const { questions, answers } = req.body;
-//   // check if question is already there
-//   pool.query(queries.checkQuestionExists, [questions], (error, results) => {
-//     if (results.rows.length) {
-//       res.send("question already exists");
-//     }
+const addQuestion = (req, res) => {
+  const { questions, answers } = req.body;
+
+  pool.query(queries.addQuestion, [questions, answers], (error, results) => {
+    if (error) throw error;
+    res.status(201).send({ message: "question and answer created" });
+  });
+};
+// const deleteQuizId = (req, res) => {
+//   const id = parseInt(req.params.id);
+//   pool.query(queries.deleteQuizId, [id], (error, results) => {
+//     res.status(201).send("questions deleted");
 //   });
+//   if (error) throw error;
 // };
 
 module.exports = {
@@ -41,5 +48,6 @@ module.exports = {
   getQuizById,
   getAnswer,
   getAnswerById,
-  // addQuestion,
+  addQuestion,
+  // deleteQuizId,
 };
