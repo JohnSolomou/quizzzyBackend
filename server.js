@@ -17,5 +17,5 @@ app.use(express.json());
 // });
 
 app.use("/", quizRoutes);
-
+app.use("/auth", require("./routes/jwtAuth"));
 app.listen(port, () => console.log(`app listening on port ${port}`));
