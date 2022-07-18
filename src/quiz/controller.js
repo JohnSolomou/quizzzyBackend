@@ -1,4 +1,3 @@
-const { ClientRequest } = require("http");
 const pool = require("../db");
 const queries = require("./queries");
 const getQuiz = (req, res) => {
